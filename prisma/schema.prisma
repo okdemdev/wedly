@@ -13,6 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String     @id @map("_id")  // Remove @default(auto()) and @db.ObjectId
+  email    String     @unique
+  name     String?
+  services Services[]
+}
+
 model Services {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   slug      String   @unique
@@ -25,12 +32,5 @@ model Services {
   offers    String[]
   images    String[]
   owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   String   @db.ObjectId
-}
-
-model User {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  email    String     @unique
-  name     String?
-  services Services[]
+  ownerId   String   // Remove @db.ObjectId since it references Kinde ID
 }

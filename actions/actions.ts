@@ -2,23 +2,34 @@
 
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
-export async function createPost(formData: FormData) {
-  const user = await prisma.user.findFirst({
-    where: {
-      id: '67b0e76d2cdbdf07bd693d13',
-    },
+export async function saveUser() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user || !user.id) {
+    throw new Error('Something went wrong');
+  }
+
+  // Check if user exists
+  let dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
   });
 
-  await prisma.post.create({
-    data: {
-      title: formData.get('title') as string,
-      body: formData.get('body') as string,
-      slug: (formData.get('title') as string).toLowerCase().replace(/\s+/g, '-') as string,
-      published: true,
-      authorId: user.id,
-    },
-  });
+  if (!dbUser) {
+    // Create new user
+    dbUser = await prisma.user.create({
+      data: {
+        id: user.id,
+        email: user.email ?? '',
+        name: user.given_name ?? '',
+      },
+    });
 
-  revalidatePath('/posts');
+    console.log('New user created:', dbUser);
+  }
+
+  // Revalidate any pages if needed
+  revalidatePath('/');
 }
