@@ -2,34 +2,46 @@
 
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
-export async function saveUser() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
-  if (!user || !user.id) {
-    throw new Error('Something went wrong');
-  }
-
-  // Check if user exists
-  let dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
+export async function createService(data: any) {
+  const service = await prisma.services.create({
+    data: {
+      ...data,
+      published: true,
+      slug: data.title.toLowerCase().replace(/ /g, '-'),
+    },
   });
+  revalidatePath('/dashboard');
+  return service;
+}
 
-  if (!dbUser) {
-    // Create new user
-    dbUser = await prisma.user.create({
-      data: {
-        id: user.id,
-        email: user.email ?? '',
-        name: user.given_name ?? '',
-      },
-    });
+export async function getServices(userId: string) {
+  const services = await prisma.services.findMany({
+    where: {
+      ownerId: userId,
+    },
+    orderBy: {
+      id: 'desc',
+    },
+  });
+  return services;
+}
 
-    console.log('New user created:', dbUser);
-  }
+export async function updateService(id: string, data: any) {
+  const service = await prisma.services.update({
+    where: { id },
+    data: {
+      ...data,
+      slug: data.title.toLowerCase().replace(/ /g, '-'),
+    },
+  });
+  revalidatePath('/dashboard');
+  return service;
+}
 
-  // Revalidate any pages if needed
-  revalidatePath('/');
+export async function deleteService(id: string) {
+  await prisma.services.delete({
+    where: { id },
+  });
+  revalidatePath('/dashboard');
 }
