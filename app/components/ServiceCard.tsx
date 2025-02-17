@@ -30,7 +30,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
   return (
     <div className="group relative flex flex-col gap-2">
       <div className="relative aspect-square overflow-hidden rounded-xl">
-        <div className="absolute right-4 top-4 z-10">
+        <div className="absolute right-8 top-8 z-10">
           <button className="rounded-full bg-white p-2 transition-transform hover:scale-110">
             <Heart className="h-4 w-4" />
           </button>

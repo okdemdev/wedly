@@ -22,10 +22,10 @@ export function CategoryFilter() {
   );
 
   return (
-    <div className="sticky top-20 z-40 border-b bg-background">
-      <div className="flex items-center gap-4">
-        <ScrollArea className="w-full">
-          <div className="flex w-max pb-4">
+    <div className="sticky top-20 z-40 bg-background w-full">
+      <div className="flex items-center border-b shadow-sm">
+        <ScrollArea className="w-screen">
+          <div className="flex w-max pb-1 gap-6 pt-4 ">
             {categories.map((category) => {
               const Icon = category.icon;
               const isActive = currentCategory === category.value;
@@ -35,26 +35,20 @@ export function CategoryFilter() {
                   onClick={() => {
                     router.push(`?${createQueryString('category', category.value)}`);
                   }}
-                  className={`flex min-w-[56px] flex-col items-center gap-2 px-3 transition-colors ${
+                  className={`flex min-w-[56px] font-bold flex-col items-center gap-2 px-3 transition-colors ${
                     isActive
                       ? 'text-primary border-b-2 border-primary'
                       : 'text-muted-foreground hover:text-primary hover:border-b-2 hover:border-primary'
                   }`}
                 >
                   <Icon className="h-6 w-6" />
-                  <span className="text-xs whitespace-nowrap">{category.label}</span>
+                  <span className="text-xs pb-4 whitespace-nowrap">{category.label}</span>
                 </button>
               );
             })}
           </div>
           <ScrollBar orientation="horizontal" className="invisible" />
         </ScrollArea>
-        <div className="flex shrink-0 border-l pl-4 pr-4">
-          <Button variant="outline" size="sm" className="h-10 gap-2">
-            <Sliders className="h-4 w-4" />
-            Filters
-          </Button>
-        </div>
       </div>
     </div>
   );

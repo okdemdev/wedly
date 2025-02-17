@@ -31,8 +31,8 @@ export default async function ServicesPage({
   const services = await getPublicServices(searchParams.category);
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 border-b bg-background">
+    <div className="min-h-screen bg-background py-4">
+      <header className="flex z-50 bg-background">
         <div className="container flex h-16 items-center justify-between px-6">
           <Logo />
           <nav>
@@ -59,7 +59,7 @@ export default async function ServicesPage({
           <CategoryFilter />
         </Suspense>
 
-        <main className="py-6">
+        <main className="py-6 px-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {services.map((service) => (
               <ServiceCard key={service.id} service={service} />
