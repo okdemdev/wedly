@@ -2,8 +2,6 @@
 
 import * as React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Sliders } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { categories } from '@/lib/categories';
 
@@ -22,34 +20,44 @@ export function CategoryFilter() {
   );
 
   return (
-    <div className="sticky z-40 bg-background w-full">
-      <div className="flex items-center border-b shadow-lg">
-        <ScrollArea className="w-screen">
-          <div className="flex w-max pb-1 gap-6 pt-4 ">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              const isActive = currentCategory === category.value;
-              return (
-                <button
-                  key={category.value}
-                  onClick={() => {
-                    router.push(`?${createQueryString('category', category.value)}`);
-                  }}
-                  className={`flex min-w-[56px] font-bold flex-col items-center gap-2 px-3 transition-colors ${
-                    isActive
-                      ? 'text-primary border-b-2 border-primary'
-                      : 'text-muted-foreground hover:text-primary hover:border-b-2 hover:border-primary'
+    <div className="sticky z-40 bg-background w-full border-b">
+      <ScrollArea className="w-full">
+        <div className="flex w-max gap-8 px-8 py-3">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            const isActive = currentCategory === category.value;
+            return (
+              <button
+                key={category.value}
+                onClick={() => {
+                  router.push(`?${createQueryString('category', category.value)}`);
+                }}
+                className="flex flex-col items-center gap-1.5 relative group"
+              >
+                <Icon
+                  className={`h-5 w-5 ${
+                    isActive ? 'text-neutral-950' : 'text-neutral-500 group-hover:text-neutral-950'
+                  }`}
+                />
+                <span
+                  className={`text-xs whitespace-nowrap font-bold ${
+                    isActive ? 'text-neutral-950' : 'text-neutral-500 group-hover:text-neutral-950'
                   }`}
                 >
-                  <Icon className="h-6 w-6" />
-                  <span className="text-xs pb-1 whitespace-nowrap">{category.label}</span>
-                </button>
-              );
-            })}
-          </div>
-          <ScrollBar orientation="horizontal" className="invisible" />
-        </ScrollArea>
-      </div>
+                  {category.label}
+                </span>
+                {isActive && (
+                  <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 h-0.5 bg-neutral-950 transition-all w-full" />
+                )}
+                {!isActive && (
+                  <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 h-0.5 bg-neutral-950 transition-all w-0 group-hover:w-full" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <ScrollBar orientation="horizontal" className="invisible" />
+      </ScrollArea>
     </div>
   );
 }

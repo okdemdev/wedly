@@ -9,9 +9,9 @@ import {
 } from 'lucide-react';
 
 export const categories = [
-  { value: 'wedding-dresses', label: 'Wedding Dresses', icon: Scissors },
-  { value: 'photography', label: 'Photography', icon: Camera },
-  { value: 'catering', label: 'Catering', icon: Cake },
+  { value: 'wedding-dresses', label: 'Rochii de Mireasa', icon: Scissors },
+  { value: 'photography', label: 'Foto/Video', icon: Camera },
+  { value: 'catering', label: 'Candy Bar', icon: Cake },
   { value: 'music', label: 'Music', icon: Music },
   { value: 'fireworks', label: 'Fireworks', icon: Fireworks },
   { value: 'jewelry', label: 'Jewelry', icon: Ring },

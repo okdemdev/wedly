@@ -1,9 +1,4 @@
 import { Suspense } from 'react';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/components';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-
 import { prisma } from '@/lib/prisma';
 import { Logo } from '../components/Logo';
 import { CategoryFilter } from '../components/CategoryFilter';
@@ -26,12 +21,10 @@ export default async function ServicesPage({
 }: {
   searchParams: { category?: string };
 }) {
-  const { isAuthenticated } = getKindeServerSession();
-  const isLoggedIn = await isAuthenticated();
   const services = await getPublicServices(searchParams.category);
 
   return (
-    <div className="min-h-screen bg-background py-4">
+    <div className="min-h-screen bg-background">
       <Logo />
       <div className="container">
         <Suspense fallback={<div>Loading categories...</div>}>
