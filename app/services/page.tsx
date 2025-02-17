@@ -31,7 +31,7 @@ export default async function ServicesPage({
           <CategoryFilter />
         </Suspense>
 
-        <main className="py-6 px-6">
+        <main className="py-6 px-4">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {services.map((service) => (
               <ServiceCard key={service.id} service={service} />
