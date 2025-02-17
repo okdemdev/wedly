@@ -22,7 +22,7 @@ export function CategoryFilter() {
   );
 
   return (
-    <div className="sticky top-20 z-40 bg-background w-full">
+    <div className="sticky z-40 bg-background w-full">
       <div className="flex items-center border-b shadow-sm">
         <ScrollArea className="w-screen">
           <div className="flex w-max pb-1 gap-6 pt-4 ">

@@ -32,28 +32,6 @@ export default async function ServicesPage({
 
   return (
     <div className="min-h-screen bg-background py-4">
-      <header className="flex z-50 bg-background">
-        <div className="container flex h-16 items-center justify-between px-6">
-          <Logo />
-          <nav>
-            {isLoggedIn ? (
-              <Button asChild variant="outline">
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
-            ) : (
-              <div className="space-x-4">
-                <LoginLink>
-                  <Button variant="outline">Sign in</Button>
-                </LoginLink>
-                <RegisterLink>
-                  <Button>Sign up</Button>
-                </RegisterLink>
-              </div>
-            )}
-          </nav>
-        </div>
-      </header>
-
       <div className="container">
         <Suspense fallback={<div>Loading categories...</div>}>
           <CategoryFilter />
