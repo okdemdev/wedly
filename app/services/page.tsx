@@ -32,6 +32,7 @@ export default async function ServicesPage({
 
   return (
     <div className="min-h-screen bg-background py-4">
+      <Logo />
       <div className="container">
         <Suspense fallback={<div>Loading categories...</div>}>
           <CategoryFilter />

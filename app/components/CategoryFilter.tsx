@@ -23,7 +23,7 @@ export function CategoryFilter() {
 
   return (
     <div className="sticky z-40 bg-background w-full">
-      <div className="flex items-center border-b shadow-sm">
+      <div className="flex items-center border-b shadow-lg">
         <ScrollArea className="w-screen">
           <div className="flex w-max pb-1 gap-6 pt-4 ">
             {categories.map((category) => {
@@ -42,7 +42,7 @@ export function CategoryFilter() {
                   }`}
                 >
                   <Icon className="h-6 w-6" />
-                  <span className="text-xs pb-4 whitespace-nowrap">{category.label}</span>
+                  <span className="text-xs pb-1 whitespace-nowrap">{category.label}</span>
                 </button>
               );
             })}
