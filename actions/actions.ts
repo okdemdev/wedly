@@ -12,6 +12,7 @@ export async function createService(data: any) {
     },
   });
   revalidatePath('/dashboard');
+  revalidatePath('/services');
   return service;
 }
 
@@ -27,6 +28,21 @@ export async function getServices(userId: string) {
   return services;
 }
 
+export async function getPublicServices(category?: string) {
+  return await prisma.services.findMany({
+    where: {
+      published: true,
+      ...(category ? { category } : {}),
+    },
+    include: {
+      owner: true,
+    },
+    orderBy: {
+      id: 'desc',
+    },
+  });
+}
+
 export async function updateService(id: string, data: any) {
   const service = await prisma.services.update({
     where: { id },
@@ -36,6 +52,7 @@ export async function updateService(id: string, data: any) {
     },
   });
   revalidatePath('/dashboard');
+  revalidatePath('/services');
   return service;
 }
 
@@ -44,4 +61,5 @@ export async function deleteService(id: string) {
     where: { id },
   });
   revalidatePath('/dashboard');
+  revalidatePath('/services');
 }
