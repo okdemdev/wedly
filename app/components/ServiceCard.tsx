@@ -4,7 +4,6 @@ import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 interface ServiceCardProps {
   service: {
@@ -23,50 +22,128 @@ interface ServiceCardProps {
 
 export function ServiceCard({ service }: ServiceCardProps) {
   const [currentImage, setCurrentImage] = React.useState(0);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+  const allImages = [service.thumbnail, ...service.images];
 
-  const images = service.images.length > 0 ? service.images : [service.thumbnail];
+  const nextImage = () => {
+    if (currentImage < allImages.length - 1) {
+      setCurrentImage((prev) => prev + 1);
+    }
+  };
+
+  const previousImage = () => {
+    if (currentImage > 0) {
+      setCurrentImage((prev) => prev - 1);
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    const startX = touch.clientX;
+    const container = scrollContainerRef.current;
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!container) return;
+      const touch = e.touches[0];
+      const diff = startX - touch.clientX;
+
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          nextImage();
+        } else {
+          previousImage();
+        }
+        cleanup();
+      }
+    };
+
+    const cleanup = () => {
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', cleanup);
+    };
+
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', cleanup);
+  };
 
   return (
     <div className="group relative flex flex-col gap-2">
       <div className="relative aspect-square overflow-hidden rounded-xl">
         <div className="absolute right-8 top-8 z-10">
-          <button className="rounded-full bg-white p-2 transition-transform hover:scale-110">
+          <button className="rounded-full bg-white p-2">
             <Heart className="h-4 w-4" />
           </button>
         </div>
 
-        <Link href={`/services/${service.slug}`} className="relative block h-full">
-          {images.map((image, index) => (
-            <Image
-              key={index}
-              src={image || '/placeholder.svg'}
-              alt={`${service.title} - Image ${index + 1}`}
-              fill
-              className={cn(
-                'object-cover transition-all duration-500',
-                isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0',
-                index === currentImage ? 'opacity-100' : 'opacity-0'
-              )}
-              onLoadingComplete={() => setIsLoading(false)}
-              priority={index === 0}
-            />
-          ))}
-        </Link>
-
-        {images.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentImage(index)}
-                className={cn(
-                  'h-1.5 w-1.5 rounded-full bg-white/80 transition-all',
-                  index === currentImage ? 'w-2' : 'opacity-70'
-                )}
+        {/* Navigation Buttons (Desktop) */}
+        {allImages.length > 1 && (
+          <>
+            <button
+              onClick={previousImage}
+              className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-100 disabled:opacity-0"
+              disabled={currentImage === 0}
+            >
+              <svg
+                className="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                <span className="sr-only">View image {index + 1}</span>
-              </button>
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-100 disabled:opacity-0"
+              disabled={currentImage === allImages.length - 1}
+            >
+              <svg
+                className="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </>
+        )}
+
+        {/* Images Container */}
+        <div
+          ref={scrollContainerRef}
+          className="flex h-full w-full"
+          onTouchStart={handleTouchStart}
+        >
+          {allImages.map((image, index) => (
+            <div
+              key={index}
+              className="h-full w-full flex-none transition-transform duration-300 ease-in-out"
+              style={{ transform: `translateX(-${currentImage * 100}%)` }}
+            >
+              <Image
+                src={image || '/placeholder.svg'}
+                alt={`${service.title} - Image ${index + 1}`}
+                fill
+                className="object-cover"
+                priority={index === 0}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination Dots */}
+        {allImages.length > 1 && (
+          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1">
+            {allImages.map((_, index) => (
+              <div
+                key={index}
+                className={`h-1.5 rounded-full bg-white/80 transition-all ${
+                  index === currentImage ? 'w-2' : 'w-1.5 opacity-70'
+                }`}
+              />
             ))}
           </div>
         )}
