@@ -26,6 +26,8 @@ import {
 import { categories } from '@/lib/categories';
 import { cities } from '@/lib/cities';
 import { createService, updateService } from '@/actions/actions';
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   title: z.string().min(2).max(100),
@@ -35,6 +37,11 @@ const formSchema = z.object({
   thumbnail: z.string().url(),
   offers: z.array(z.string()).min(1),
   images: z.array(z.string().url()).min(1),
+  priceFrom: z.number().min(0),
+  priceTo: z.number().min(0),
+  isPromoted: z.boolean().default(false),
+  rating: z.number().min(0).max(5).default(5),
+  isFavorite: z.boolean().default(false),
 });
 
 export function ServiceForm({ userId, initialData }: { userId?: string; initialData?: any }) {
@@ -200,6 +207,89 @@ export function ServiceForm({ userId, initialData }: { userId?: string; initialD
             </FormItem>
           )}
         />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="priceFrom"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price From</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="priceTo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price To</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="space-y-4">
+          <FormField
+            control={form.control}
+            name="isPromoted"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-2">
+                <FormControl>
+                  <Checkbox 
+                    checked={field.value} 
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel>Promote this service</FormLabel>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="isFavorite"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-2">
+                <FormControl>
+                  <Checkbox 
+                    checked={field.value} 
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel>Mark as favorite</FormLabel>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="rating"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rating</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="number" 
+                    step="0.01" 
+                    min="0" 
+                    max="5" 
+                    {...field} 
+                    onChange={e => field.onChange(parseFloat(e.target.value))}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Creating...' : 'Create Service'}
         </Button>

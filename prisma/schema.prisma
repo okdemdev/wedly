@@ -21,16 +21,21 @@ model User {
 }
 
 model Services {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  slug      String   @unique
-  published Boolean
-  title     String
-  about     String
-  city      String
-  category  String
-  thumbnail String
-  offers    String[]
-  images    String[]
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   String   // Remove @db.ObjectId since it references Kinde ID
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug          String   @unique
+  published     Boolean
+  title         String
+  about         String
+  city          String
+  category      String
+  thumbnail     String
+  offers        String[]
+  images        String[]
+  priceFrom     Float
+  priceTo       Float
+  isPromoted    Boolean  @default(false)
+  rating        Float    @default(5)
+  isFavorite    Boolean  @default(false)
+  owner         User     @relation(fields: [ownerId], references: [id])
+  ownerId       String
 }
