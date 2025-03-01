@@ -52,18 +52,22 @@ export default async function ServicesPage({
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container">
-        <div className="flex flex-col space-y-6 px-6 py-4 md:px-20">
-          <div className="flex md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 px-4">
-            <Logo />
-            <ServiceFilters cities={cities} />
+      <div className="sticky top-0 z-50 bg-background">
+        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+          <div className="container">
+            <div className="flex flex-col space-y-6 px-6 py-4 md:px-20">
+              <div className="flex md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 px-4">
+                <Logo />
+                <ServiceFilters cities={cities} />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <Suspense fallback={<div>Loading categories...</div>}>
-        <CategoryFilter />
-      </Suspense>
+        <Suspense fallback={<div>Loading categories...</div>}>
+          <CategoryFilter />
+        </Suspense>
+      </div>
       {/* Rest of the component remains the same */}
       <div className="container">
         <main className="py-6 px-4">

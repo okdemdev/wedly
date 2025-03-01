@@ -20,7 +20,7 @@ export function CategoryFilter() {
   );
 
   return (
-    <div className="sticky top-0 z-40 bg-background w-full border-b shadow-md">
+    <div className="w-full bg-background border-b shadow-md">
       <ScrollArea className="w-full">
         <div className="flex w-max gap-8 px-4 py-3">
           {categories.map((category) => {
