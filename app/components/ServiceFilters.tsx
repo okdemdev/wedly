@@ -80,7 +80,9 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
           >
             <div className="flex items-center">
               <Search className="mr-4 h-4 w-4" />
-              <span className="pl-2">Start your search</span>
+              <span className="pl-2">
+                {Object.values(filters).some(Boolean) ? 'Edit your search' : 'Start your search'}
+              </span>
             </div>
             {Object.values(filters).some(Boolean) && (
               <span className="text-sm text-muted-foreground">
