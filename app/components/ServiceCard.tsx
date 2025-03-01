@@ -75,6 +75,17 @@ export function ServiceCard({ service }: ServiceCardProps) {
   return (
     <div className="group relative flex flex-col gap-2">
       <div className="relative aspect-square overflow-hidden rounded-xl">
+        {service.isFavorite && (
+          <div className="absolute left-4 top-4 z-10">
+            <Badge
+              variant="secondary"
+              className="px-2.5 py-1 text-xs font-medium bg-white text-black rounded-full shadow-sm"
+            >
+              Our Choice
+            </Badge>
+          </div>
+        )}
+
         {service.isPromoted && (
           <div className="absolute bottom-0 left-0 z-10">
             <div className="relative">
@@ -181,9 +192,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
           <p className="font-medium">
             de la <span className="font-bold">{service.priceFrom} RON</span>
           </p>
-          <div className="flex gap-2">
-            {service.isFavorite && <Badge variant="default">Featured</Badge>}
-          </div>
+          {/* Removed the Featured badge from here */}
+          <div className="flex gap-2" />
         </div>
       </Link>
     </div>
