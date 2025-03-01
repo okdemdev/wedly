@@ -64,7 +64,6 @@ export default async function ServicesPage({
       <Suspense fallback={<div>Loading categories...</div>}>
         <CategoryFilter />
       </Suspense>
-
       {/* Rest of the component remains the same */}
       <div className="container">
         <main className="py-6 px-4">

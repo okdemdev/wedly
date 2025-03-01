@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Search } from 'lucide-react';
+import { X } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 export function ServiceFilters({ cities }: { cities: string[] }) {
   const router = useRouter();
@@ -29,6 +31,20 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
   const [priceRange, setPriceRange] = React.useState([0, 10000]);
   const [rating, setRating] = React.useState('');
   const [selectedCity, setSelectedCity] = React.useState('');
+
+  const filters = {
+    city: searchParams.get('city'),
+    minPrice: searchParams.get('minPrice'),
+    maxPrice: searchParams.get('maxPrice'),
+    rating: searchParams.get('rating'),
+    category: searchParams.get('category'),
+  };
+
+  const removeFilter = (key: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.delete(key);
+    router.push(`/services?${params.toString()}`);
+  };
 
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams);
@@ -57,7 +73,50 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
           <SheetDescription>Adjust your search criteria</SheetDescription>
         </SheetHeader>
 
-        <div className="space-y-4 py-4">
+        <div className="space-y-6 py-4">
+          {/* Active Filters Section */}
+          {Object.values(filters).some(Boolean) && (
+            <div className="space-y-2 border rounded-lg p-4 bg-muted/50">
+              <label className="text-sm font-medium">Active filters</label>
+              <div className="flex flex-wrap gap-2">
+                {filters.city && (
+                  <Badge variant="secondary" className="flex items-center gap-2">
+                    {filters.city}
+                    <X className="h-3 w-3 cursor-pointer" onClick={() => removeFilter('city')} />
+                  </Badge>
+                )}
+                {filters.category && (
+                  <Badge variant="secondary" className="flex items-center gap-2">
+                    {filters.category}
+                    <X
+                      className="h-3 w-3 cursor-pointer"
+                      onClick={() => removeFilter('category')}
+                    />
+                  </Badge>
+                )}
+                {(filters.minPrice || filters.maxPrice) && (
+                  <Badge variant="secondary" className="flex items-center gap-2">
+                    {filters.minPrice || '0'} - {filters.maxPrice || '∞'} RON
+                    <X
+                      className="h-3 w-3 cursor-pointer"
+                      onClick={() => {
+                        removeFilter('minPrice');
+                        removeFilter('maxPrice');
+                      }}
+                    />
+                  </Badge>
+                )}
+                {filters.rating && (
+                  <Badge variant="secondary" className="flex items-center gap-2">
+                    {filters.rating}+ stars
+                    <X className="h-3 w-3 cursor-pointer" onClick={() => removeFilter('rating')} />
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Filter Options */}
           <div className="space-y-2">
             <label>City</label>
             <Select value={selectedCity} onValueChange={setSelectedCity}>
