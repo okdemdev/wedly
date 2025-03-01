@@ -4,6 +4,7 @@ import { Logo } from '../components/Logo';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { ServiceCard } from '../components/ServiceCard';
 import { ServiceFilters } from '../components/ServiceFilters';
+import { ActiveFilters } from '../components/ActiveFilters';
 
 async function getPublicServices(params: {
   category?: string;
@@ -56,6 +57,7 @@ export default async function ServicesPage({
           <Logo />
           <ServiceFilters cities={cities} />
         </div>
+        <ActiveFilters />
       </div>
 
       <Suspense fallback={<div>Loading categories...</div>}>
