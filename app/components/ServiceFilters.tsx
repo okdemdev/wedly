@@ -29,9 +29,13 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [priceRange, setPriceRange] = React.useState([0, 10000]);
-  const [rating, setRating] = React.useState('');
-  const [selectedCity, setSelectedCity] = React.useState('');
+  // Initialize state from URL params
+  const [priceRange, setPriceRange] = React.useState([
+    searchParams.get('minPrice') ? parseInt(searchParams.get('minPrice')!) : 0,
+    searchParams.get('maxPrice') ? parseInt(searchParams.get('maxPrice')!) : 10000,
+  ]);
+  const [rating, setRating] = React.useState(searchParams.get('rating') || 'any');
+  const [selectedCity, setSelectedCity] = React.useState(searchParams.get('city') || 'all');
 
   const filters = {
     city: searchParams.get('city'),
@@ -49,14 +53,21 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
 
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams);
-    if (selectedCity) params.set('city', selectedCity);
-    if (rating) params.set('rating', rating);
+    if (selectedCity && selectedCity !== 'all') params.set('city', selectedCity);
+    if (rating && rating !== 'any') params.set('rating', rating);
     params.set('minPrice', priceRange[0].toString());
     params.set('maxPrice', priceRange[1].toString());
 
     router.push(`/services?${params.toString()}`);
   };
 
+  // Update Clear all button handler
+  const clearAllFilters = () => {
+    router.push('/services');
+    setPriceRange([0, 10000]);
+    setRating('any');
+    setSelectedCity('all');
+  };
   return (
     <Sheet>
       <div className="flex flex-col w-full">
@@ -77,17 +88,22 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
           </Button>
         </SheetTrigger>
       </div>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Filter Services</SheetTitle>
-          <SheetDescription>Adjust your search criteria</SheetDescription>
+      <SheetContent side="top" className="w-full sm:max-w-2xl sm:mx-auto">
+        <SheetHeader className="mb-6">
+          <SheetTitle className="text-2xl">Filter Services</SheetTitle>
+          <SheetDescription>Find the perfect service for your needs</SheetDescription>
         </SheetHeader>
 
-        <div className="space-y-6 py-4">
-          {/* Active Filters Section */}
+        <div className="space-y-8 py-4">
+          {/* Active Filters Section with improved styling */}
           {Object.values(filters).some(Boolean) && (
-            <div className="space-y-2 border rounded-lg p-4 bg-muted/50">
-              <label className="text-sm font-medium">Active filters</label>
+            <div className="space-y-3 border rounded-lg p-5 bg-muted/30">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium">Active filters</label>
+                <Button variant="ghost" size="sm" onClick={clearAllFilters}>
+                  Clear all
+                </Button>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {filters.city && (
                   <Badge variant="secondary" className="flex items-center gap-2">
@@ -126,56 +142,61 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
             </div>
           )}
 
-          {/* Filter Options */}
-          <div className="space-y-2">
-            <label>City</label>
-            <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select city" />
-              </SelectTrigger>
-              <SelectContent>
-                {cities.map((city) => (
-                  <SelectItem key={city} value={city}>
-                    {city}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          {/* Filter Options with improved styling */}
+          <div className="grid gap-8">
+            <div className="space-y-3">
+              <label className="text-sm font-medium">City</label>
+              <Select value={selectedCity} onValueChange={setSelectedCity}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select city" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All cities</SelectItem>
+                  {cities.map((city) => (
+                    <SelectItem key={city} value={city}>
+                      {city}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className="space-y-2">
-            <label>Price Range</label>
-            <Slider
-              min={0}
-              max={10000}
-              step={100}
-              value={priceRange}
-              onValueChange={setPriceRange}
-            />
-            <div className="flex justify-between text-sm">
-              <span>{priceRange[0]} RON</span>
-              <span>{priceRange[1]} RON</span>
+            <div className="space-y-3">
+              <label className="text-sm font-medium">Price Range (RON)</label>
+              <Slider
+                min={0}
+                max={10000}
+                step={100}
+                value={priceRange}
+                onValueChange={setPriceRange}
+                className="my-6"
+              />
+              <div className="flex items-center justify-between text-sm">
+                <div className="border rounded-md px-3 py-1.5">{priceRange[0]} RON</div>
+                <div className="border rounded-md px-3 py-1.5">{priceRange[1]} RON</div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-sm font-medium">Minimum Rating</label>
+              <Select value={rating} onValueChange={setRating}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Any rating" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any rating</SelectItem>
+                  {[5, 4, 3, 2, 1].map((value) => (
+                    <SelectItem key={value} value={value.toString()}>
+                      {value}+ Stars
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label>Minimum Rating</label>
-            <Select value={rating} onValueChange={setRating}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select rating" />
-              </SelectTrigger>
-              <SelectContent>
-                {[5, 4, 3, 2, 1].map((value) => (
-                  <SelectItem key={value} value={value.toString()}>
-                    {value}+ Stars
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <Button onClick={applyFilters} className="w-full">
-            Apply Filters
+          <Button onClick={applyFilters} className="w-full h-11 mt-6">
+            Show results
           </Button>
         </div>
       </SheetContent>
