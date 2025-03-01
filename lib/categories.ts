@@ -9,11 +9,11 @@ import {
 } from 'lucide-react';
 
 export const categories = [
-  { value: 'wedding-dresses', label: 'Rochii de Mireasa', icon: Scissors },
+  { value: 'wedding-dresses', label: 'Rochii Mireasa', icon: Scissors },
   { value: 'photography', label: 'Foto/Video', icon: Camera },
   { value: 'catering', label: 'Candy Bar', icon: Cake },
-  { value: 'music', label: 'Music', icon: Music },
-  { value: 'fireworks', label: 'Fireworks', icon: Fireworks },
-  { value: 'jewelry', label: 'Jewelry', icon: Ring },
-  { value: 'gifts', label: 'Gifts', icon: Gift },
+  { value: 'music', label: 'Muzica', icon: Music },
+  { value: 'fireworks', label: 'Artificii', icon: Fireworks },
+  { value: 'jewelry', label: 'Bijuterii', icon: Ring },
+  { value: 'gifts', label: 'Marturii', icon: Gift },
 ];
