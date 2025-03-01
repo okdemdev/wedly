@@ -13,6 +13,14 @@ async function getPublicServices(category?: string) {
     include: {
       owner: true,
     },
+    orderBy: [
+      {
+        isPromoted: 'desc',
+      },
+      {
+        createdAt: 'desc',
+      },
+    ],
   });
 }
 
