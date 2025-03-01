@@ -43,8 +43,11 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="w-[300px] justify-start text-muted-foreground">
-          <Search className="mr-2 h-4 w-4" />
+        <Button
+          variant="outline"
+          className="w-full md:w-[400px] justify-start text-muted-foreground rounded-full border-gray-300"
+        >
+          <Search className="mr-3 h-4 w-4" />
           Start your search
         </Button>
       </SheetTrigger>
