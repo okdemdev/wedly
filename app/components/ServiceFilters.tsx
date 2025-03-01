@@ -28,6 +28,7 @@ import { cn } from '@/lib/utils';
 export function ServiceFilters({ cities }: { cities: string[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [open, setOpen] = React.useState(false);
 
   // Initialize state from URL params
   const [priceRange, setPriceRange] = React.useState([
@@ -50,6 +51,14 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
     params.delete(key);
     router.push(`/services?${params.toString()}`);
   };
+  // Remove the duplicate applyFilters and add clearAllFilters
+  const clearAllFilters = () => {
+    router.push('/services');
+    setPriceRange([0, 10000]);
+    setRating('any');
+    setSelectedCity('all');
+    setOpen(false);
+  };
 
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams);
@@ -59,17 +68,10 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
     params.set('maxPrice', priceRange[1].toString());
 
     router.push(`/services?${params.toString()}`);
-  };
-
-  // Update Clear all button handler
-  const clearAllFilters = () => {
-    router.push('/services');
-    setPriceRange([0, 10000]);
-    setRating('any');
-    setSelectedCity('all');
+    setOpen(false);
   };
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <div className="flex flex-col w-full">
         <SheetTrigger asChild>
           <Button
