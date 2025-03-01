@@ -1,0 +1,112 @@
+'use client';
+
+import * as React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { Search } from 'lucide-react';
+
+export function ServiceFilters({ cities }: { cities: string[] }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [priceRange, setPriceRange] = React.useState([0, 10000]);
+  const [rating, setRating] = React.useState('');
+  const [selectedCity, setSelectedCity] = React.useState('');
+
+  const applyFilters = () => {
+    const params = new URLSearchParams(searchParams);
+    if (selectedCity) params.set('city', selectedCity);
+    if (rating) params.set('rating', rating);
+    params.set('minPrice', priceRange[0].toString());
+    params.set('maxPrice', priceRange[1].toString());
+
+    router.push(`/services?${params.toString()}`);
+  };
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" className="w-[300px] justify-start text-muted-foreground">
+          <Search className="mr-2 h-4 w-4" />
+          Start your search
+        </Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Filter Services</SheetTitle>
+          <SheetDescription>Adjust your search criteria</SheetDescription>
+        </SheetHeader>
+
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <label>City</label>
+            <Select value={selectedCity} onValueChange={setSelectedCity}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select city" />
+              </SelectTrigger>
+              <SelectContent>
+                {cities.map((city) => (
+                  <SelectItem key={city} value={city}>
+                    {city}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label>Price Range</label>
+            <Slider
+              min={0}
+              max={10000}
+              step={100}
+              value={priceRange}
+              onValueChange={setPriceRange}
+            />
+            <div className="flex justify-between text-sm">
+              <span>{priceRange[0]} RON</span>
+              <span>{priceRange[1]} RON</span>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label>Minimum Rating</label>
+            <Select value={rating} onValueChange={setRating}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select rating" />
+              </SelectTrigger>
+              <SelectContent>
+                {[5, 4, 3, 2, 1].map((value) => (
+                  <SelectItem key={value} value={value.toString()}>
+                    {value}+ Stars
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Button onClick={applyFilters} className="w-full">
+            Apply Filters
+          </Button>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}

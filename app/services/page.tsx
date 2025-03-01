@@ -3,41 +3,66 @@ import { prisma } from '@/lib/prisma';
 import { Logo } from '../components/Logo';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { ServiceCard } from '../components/ServiceCard';
+import { ServiceFilters } from '../components/ServiceFilters';
 
-async function getPublicServices(category?: string) {
+async function getPublicServices(params: {
+  category?: string;
+  city?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  rating?: number;
+}) {
   return await prisma.services.findMany({
     where: {
       published: true,
-      ...(category ? { category } : {}),
+      ...(params.category ? { category: params.category } : {}),
+      ...(params.city ? { city: params.city } : {}),
+      ...(params.minPrice ? { priceFrom: { gte: params.minPrice } } : {}),
+      ...(params.maxPrice ? { priceTo: { lte: params.maxPrice } } : {}),
+      ...(params.rating ? { rating: { gte: params.rating } } : {}),
     },
     include: {
       owner: true,
     },
-    orderBy: [
-      {
-        isPromoted: 'desc',
-      },
-      {
-        createdAt: 'desc',
-      },
-    ],
+    orderBy: [{ isPromoted: 'desc' }, { createdAt: 'desc' }],
   });
 }
 
 export default async function ServicesPage({
   searchParams,
 }: {
-  searchParams: { category?: string };
+  searchParams: {
+    category?: string;
+    city?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    rating?: string;
+  };
 }) {
-  const services = await getPublicServices(searchParams.category);
+  const services = await getPublicServices({
+    category: searchParams.category,
+    city: searchParams.city,
+    minPrice: searchParams.minPrice ? parseFloat(searchParams.minPrice) : undefined,
+    maxPrice: searchParams.maxPrice ? parseFloat(searchParams.maxPrice) : undefined,
+    rating: searchParams.rating ? parseFloat(searchParams.rating) : undefined,
+  });
+
+  const cities = [...new Set(services.map((service) => service.city))];
 
   return (
     <div className="min-h-screen bg-background">
-      <Logo />
+      <div className="container">
+        <div className="flex items-center justify-between py-4">
+          <Logo />
+          <ServiceFilters cities={cities} />
+        </div>
+      </div>
+
       <Suspense fallback={<div>Loading categories...</div>}>
         <CategoryFilter />
       </Suspense>
 
+      {/* Rest of the component remains the same */}
       <div className="container">
         <main className="py-6 px-4">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
