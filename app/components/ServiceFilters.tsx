@@ -23,6 +23,7 @@ import { Slider } from '@/components/ui/slider';
 import { Search } from 'lucide-react';
 import { X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export function ServiceFilters({ cities }: { cities: string[] }) {
   const router = useRouter();
@@ -58,15 +59,24 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          className="w-full md:w-[400px] justify-start text-muted-foreground rounded-full border-gray-300"
-        >
-          <Search className="mr-3 h-4 w-4" />
-          Start your search
-        </Button>
-      </SheetTrigger>
+      <div className="flex flex-col w-full">
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            className="w-full md:w-[400px] justify-between text-muted-foreground rounded-full border-gray-300 group"
+          >
+            <div className="flex items-center">
+              <Search className="mr-4 h-4 w-4" />
+              <span className="pl-2">Start your search</span>
+            </div>
+            {Object.values(filters).some(Boolean) && (
+              <span className="text-sm text-muted-foreground">
+                {Object.values(filters).filter(Boolean).length} active
+              </span>
+            )}
+          </Button>
+        </SheetTrigger>
+      </div>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Filter Services</SheetTitle>
