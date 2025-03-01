@@ -86,6 +86,11 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </div>
         )}
 
+        <div className="absolute right-4 top-4 z-10">
+          <button className="rounded-full bg-white p-2">
+            <Heart className="h-4 w-4" />
+          </button>
+        </div>
         {service.isPromoted && (
           <div className="absolute bottom-0 left-0 z-10">
             <div className="relative">
@@ -96,11 +101,6 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </div>
         )}
 
-        <div className="absolute right-8 top-8 z-10">
-          <button className="rounded-full bg-white p-2">
-            <Heart className="h-4 w-4" />
-          </button>
-        </div>
         {/* Navigation Buttons (Desktop) */}
         {allImages.length > 1 && (
           <>
