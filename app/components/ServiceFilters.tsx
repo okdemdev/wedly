@@ -25,7 +25,7 @@ import { X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
-export function ServiceFilters({ cities }: { cities: string[] }) {
+export function ServiceFilters({ cities, className }: { cities: string[]; className?: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [open, setOpen] = React.useState(false);
@@ -72,11 +72,11 @@ export function ServiceFilters({ cities }: { cities: string[] }) {
   };
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <div className="flex flex-col w-full">
+      <div className={cn('flex flex-col w-full', className)}>
         <SheetTrigger asChild>
           <Button
             variant="outline"
-            className="w-full md:w-[400px] justify-between text-muted-foreground rounded-full border-gray-300 group"
+            className="w-full justify-between text-muted-foreground rounded-full border-gray-300 group transition-all duration-300"
           >
             <div className="flex items-center">
               <Search className="mr-4 h-4 w-4" />

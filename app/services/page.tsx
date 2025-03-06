@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { prisma } from '@/lib/prisma';
-import { Logo } from '../components/Logo';
+import { ScrollingLogo } from '../components/ScrollingLogo';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { ServiceCard } from '../components/ServiceCard';
 import { ServiceFilters } from '../components/ServiceFilters';
@@ -56,8 +56,8 @@ export default async function ServicesPage({
         <div className="container">
           <div className="flex flex-col space-y-6 px-6 py-4 md:px-20">
             <div className="flex md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 px-4">
-              <Logo />
-              <ServiceFilters cities={cities} />
+              <ScrollingLogo />
+              <ServiceFilters cities={cities} className="flex-1 transition-all duration-300" />
             </div>
           </div>
         </div>
