@@ -57,11 +57,8 @@ export default async function ServicesPage({
         <div className="container mx-auto">
           <div className="flex flex-col space-y-6 px-4 py-4 md:px-4">
             <div className="flex md:flex-row items-center justify-between">
-              <ScrollingLogo />
-              <ServiceFilters
-                cities={cities}
-                className="flex-1 max-w-[500px] ml-4 transition-all duration-300"
-              />
+              <ScrollingLogo className="mr-4" />
+              <ServiceFilters cities={cities} className="flex-1 max-w-[500px] transition-all duration-300" />
             </div>
           </div>
         </div>
