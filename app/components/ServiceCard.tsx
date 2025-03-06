@@ -79,9 +79,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
           <div className="absolute left-4 top-4 z-10">
             <Badge
               variant="secondary"
-              className="px-2.5 py-1 text-xs font-medium bg-white text-black rounded-full shadow-sm"
+              className="px-2.5 py-1 text-xs font-medium bg-white text-black rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.1)]"
             >
-              Our Choice
+              Recomandat
             </Badge>
           </div>
         )}
@@ -95,7 +95,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           <div className="absolute bottom-0 left-0 z-10">
             <div className="relative">
               <div className="bg-pink-500 text-white text-xs font-medium px-3 py-1 rounded-tr-xl">
-                Promoted
+                Promovat
               </div>
             </div>
           </div>

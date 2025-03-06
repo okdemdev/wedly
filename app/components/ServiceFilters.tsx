@@ -76,7 +76,7 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
         <SheetTrigger asChild>
           <Button
             variant="outline"
-            className="w-full h-12 justify-center text-neutral-950 rounded-full border-0 shadow-[0_4px_20px_rgb(0,0,0,0.1)] hover:shadow-[0_6px_25px_rgb(0,0,0,0.15)] transition-all duration-300 bg-white"
+            className="w-full h-[50px] justify-center text-neutral-950 rounded-full border-0 shadow-[0_4px_20px_rgb(0,0,0,0.1)] hover:shadow-[0_6px_25px_rgb(0,0,0,0.15)] transition-all duration-300 bg-white"
           >
             <div className="flex items-center gap-2">
               <Search className="h-[12px] w-[12px]" />
