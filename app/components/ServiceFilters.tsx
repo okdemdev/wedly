@@ -76,19 +76,14 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
         <SheetTrigger asChild>
           <Button
             variant="outline"
-            className="w-full justify-between text-muted-foreground rounded-full border-gray-300 group transition-all duration-300"
+            className="w-full h-12 justify-center text-neutral-950 rounded-full border-0 shadow-[0_2px_10px_rgb(0,0,0,0.08)] hover:shadow-[0_2px_15px_rgb(0,0,0,0.12)] transition-all duration-300 bg-white"
           >
-            <div className="flex items-center">
-              <Search className="mr-4 h-4 w-4" />
-              <span className="pl-2">
+            <div className="flex items-center gap-2">
+              <Search className="h-[12px] w-[12px]" />
+              <span className="text-sm">
                 {Object.values(filters).some(Boolean) ? 'Edit your search' : 'Start your search'}
               </span>
             </div>
-            {Object.values(filters).some(Boolean) && (
-              <span className="text-sm text-muted-foreground">
-                {Object.values(filters).filter(Boolean).length} active
-              </span>
-            )}
           </Button>
         </SheetTrigger>
       </div>
