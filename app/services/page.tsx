@@ -5,6 +5,7 @@ import { CategoryFilter } from '../components/CategoryFilter';
 import { ServiceCard } from '../components/ServiceCard';
 import { ServiceFilters } from '../components/ServiceFilters';
 import { ActiveFilters } from '../components/ActiveFilters';
+import { cities } from '@/lib/cities';
 
 async function getPublicServices(params: {
   category?: string;
@@ -53,11 +54,11 @@ export default async function ServicesPage({
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-50 bg-background">
-        <div className="container">
+        <div className="container mx-auto">
           <div className="flex flex-col space-y-6 px-4 py-4 md:px-4">
-            <div className="flex md:flex-row items-start md:items-center justify-between gap-4 md:gap-0">
+            <div className="header-container flex md:flex-row items-center justify-center gap-4 logo-visible">
               <ScrollingLogo />
-              <ServiceFilters cities={cities} className="flex-1 transition-all duration-300" />
+              <ServiceFilters cities={cities} className="flex-1 max-w-[500px] ml-4 transition-all duration-300" />
             </div>
           </div>
         </div>

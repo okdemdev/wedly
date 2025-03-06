@@ -72,7 +72,7 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
   };
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <div className={cn('flex flex-col w-full', className)}>
+      <div className={cn('flex flex-col w-full max-w-[500px] mx-auto', className)}>
         <SheetTrigger asChild>
           <Button
             variant="outline"

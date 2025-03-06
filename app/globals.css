@@ -96,3 +96,17 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Add this to your globals.css */
+.header-container {
+  transition: gap 0.3s ease;
+}
+
+.header-container.logo-hidden {
+  gap: 0;
+}
+
+.logo-hidden .search-container {
+  margin-left: auto;
+  margin-right: auto;
+}
