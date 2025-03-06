@@ -41,18 +41,12 @@ export default async function ServicesPage({
     rating?: string;
   };
 }) {
-  // If no category is specified, use 'rochii-mireasa' as default
-  const params = {
-    ...searchParams,
-    category: searchParams.category || 'rochii-mireasa',
-  };
-
   const services = await getPublicServices({
-    category: params.category,
-    city: params.city,
-    minPrice: params.minPrice ? parseFloat(params.minPrice) : undefined,
-    maxPrice: params.maxPrice ? parseFloat(params.maxPrice) : undefined,
-    rating: params.rating ? parseFloat(params.rating) : undefined,
+    category: searchParams.category,
+    city: searchParams.city,
+    minPrice: searchParams.minPrice ? parseFloat(searchParams.minPrice) : undefined,
+    maxPrice: searchParams.maxPrice ? parseFloat(searchParams.maxPrice) : undefined,
+    rating: searchParams.rating ? parseFloat(searchParams.rating) : undefined,
   });
 
   const cities = [...new Set(services.map((service) => service.city))];
@@ -79,17 +73,26 @@ export default async function ServicesPage({
       {/* Rest of the component remains the same */}
       <div className="container">
         <main className="py-6 px-4">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {services.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
-          </div>
-
-          {services.length === 0 && (
+          {!searchParams.category ? (
             <div className="flex min-h-[400px] flex-col items-center justify-center gap-2 rounded-lg border bg-muted/40 p-8 text-center">
-              <h2 className="text-xl font-semibold">No services found</h2>
+              <h2 className="text-xl font-semibold">Selectează o categorie</h2>
               <p className="text-muted-foreground">
-                Try adjusting your search or filter to find what you're looking for.
+                Alege o categorie din meniul de mai sus pentru a vedea serviciile disponibile.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {services.map((service) => (
+                <ServiceCard key={service.id} service={service} />
+              ))}
+            </div>
+          )}
+
+          {searchParams.category && services.length === 0 && (
+            <div className="flex min-h-[400px] flex-col items-center justify-center gap-2 rounded-lg border bg-muted/40 p-8 text-center">
+              <h2 className="text-xl font-semibold">Nu am găsit servicii</h2>
+              <p className="text-muted-foreground">
+                Încearcă să ajustezi filtrele pentru a găsi ceea ce cauți.
               </p>
             </div>
           )}

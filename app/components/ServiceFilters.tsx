@@ -43,17 +43,21 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
     minPrice: searchParams.get('minPrice'),
     maxPrice: searchParams.get('maxPrice'),
     rating: searchParams.get('rating'),
-    category: searchParams.get('category'),
   };
 
   const removeFilter = (key: string) => {
     const params = new URLSearchParams(searchParams);
+    const category = searchParams.get('category');
     params.delete(key);
+    if (category) params.set('category', category);
     router.push(`/services?${params.toString()}`);
   };
-  // Remove the duplicate applyFilters and add clearAllFilters
+
   const clearAllFilters = () => {
-    router.push('/services');
+    const params = new URLSearchParams();
+    const category = searchParams.get('category');
+    if (category) params.set('category', category);
+    router.push(`/services?${params.toString()}`);
     setPriceRange([0, 10000]);
     setRating('any');
     setSelectedCity('all');
@@ -62,6 +66,9 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
 
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams);
+    const category = searchParams.get('category');
+    if (category) params.set('category', category);
+
     if (selectedCity && selectedCity !== 'all') params.set('city', selectedCity);
     if (rating && rating !== 'any') params.set('rating', rating);
     params.set('minPrice', priceRange[0].toString());
@@ -70,6 +77,7 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
     router.push(`/services?${params.toString()}`);
     setOpen(false);
   };
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <div className={cn('flex flex-col w-full max-w-[500px] mr-4', className)}>
@@ -89,18 +97,17 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
       </div>
       <SheetContent side="top" className="w-full sm:max-w-2xl sm:mx-auto">
         <SheetHeader className="mb-6">
-          <SheetTitle className="text-2xl">Filter Services</SheetTitle>
-          <SheetDescription>Find the perfect service for your needs</SheetDescription>
+          <SheetTitle className="text-2xl">Filtrează serviciile</SheetTitle>
+          <SheetDescription>Găsește serviciul perfect pentru tine</SheetDescription>
         </SheetHeader>
 
         <div className="space-y-8 py-4">
-          {/* Active Filters Section with improved styling */}
           {Object.values(filters).some(Boolean) && (
             <div className="space-y-3 border rounded-lg p-5 bg-muted/30">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Active filters</label>
+                <label className="text-sm font-medium">Filtre active</label>
                 <Button variant="ghost" size="sm" onClick={clearAllFilters}>
-                  Clear all
+                  Șterge tot
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -108,15 +115,6 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
                   <Badge variant="secondary" className="flex items-center gap-2">
                     {filters.city}
                     <X className="h-3 w-3 cursor-pointer" onClick={() => removeFilter('city')} />
-                  </Badge>
-                )}
-                {filters.category && (
-                  <Badge variant="secondary" className="flex items-center gap-2">
-                    {filters.category}
-                    <X
-                      className="h-3 w-3 cursor-pointer"
-                      onClick={() => removeFilter('category')}
-                    />
                   </Badge>
                 )}
                 {(filters.minPrice || filters.maxPrice) && (
@@ -133,7 +131,7 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
                 )}
                 {filters.rating && (
                   <Badge variant="secondary" className="flex items-center gap-2">
-                    {filters.rating}+ stars
+                    {filters.rating}+ stele
                     <X className="h-3 w-3 cursor-pointer" onClick={() => removeFilter('rating')} />
                   </Badge>
                 )}
@@ -141,16 +139,15 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
             </div>
           )}
 
-          {/* Filter Options with improved styling */}
           <div className="grid gap-8">
             <div className="space-y-3">
-              <label className="text-sm font-medium">City</label>
+              <label className="text-sm font-medium">Oraș</label>
               <Select value={selectedCity} onValueChange={setSelectedCity}>
                 <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select city" />
+                  <SelectValue placeholder="Selectează orașul" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All cities</SelectItem>
+                  <SelectItem value="all">Toate orașele</SelectItem>
                   {cities.map((city) => (
                     <SelectItem key={city} value={city}>
                       {city}
@@ -161,7 +158,7 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
             </div>
 
             <div className="space-y-3">
-              <label className="text-sm font-medium">Price Range (RON)</label>
+              <label className="text-sm font-medium">Interval de preț (RON)</label>
               <Slider
                 min={0}
                 max={10000}
@@ -177,16 +174,16 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
             </div>
 
             <div className="space-y-3">
-              <label className="text-sm font-medium">Minimum Rating</label>
+              <label className="text-sm font-medium">Rating minim</label>
               <Select value={rating} onValueChange={setRating}>
                 <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Any rating" />
+                  <SelectValue placeholder="Orice rating" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="any">Any rating</SelectItem>
+                  <SelectItem value="any">Orice rating</SelectItem>
                   {[5, 4, 3, 2, 1].map((value) => (
                     <SelectItem key={value} value={value.toString()}>
-                      {value}+ Stars
+                      {value}+ stele
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -195,7 +192,7 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
           </div>
 
           <Button onClick={applyFilters} className="w-full h-11 mt-6">
-            Show results
+            Arată rezultatele
           </Button>
         </div>
       </SheetContent>
