@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
-interface ServiceCardProps {
+type ServiceCardProps = {
   service: {
     id: string;
     slug: string;
@@ -21,10 +21,12 @@ interface ServiceCardProps {
     rating: number;
     isFavorite: boolean;
     owner: {
-      name: string;
+      id: string;
+      email: string;
+      name: string | null; // Update this line to allow null
     };
   };
-}
+};
 
 export function ServiceCard({ service }: ServiceCardProps) {
   const [currentImage, setCurrentImage] = React.useState(0);
