@@ -41,12 +41,18 @@ export default async function ServicesPage({
     rating?: string;
   };
 }) {
+  // If no category is specified, use 'rochii-mireasa' as default
+  const params = {
+    ...searchParams,
+    category: searchParams.category || 'rochii-mireasa',
+  };
+
   const services = await getPublicServices({
-    category: searchParams.category,
-    city: searchParams.city,
-    minPrice: searchParams.minPrice ? parseFloat(searchParams.minPrice) : undefined,
-    maxPrice: searchParams.maxPrice ? parseFloat(searchParams.maxPrice) : undefined,
-    rating: searchParams.rating ? parseFloat(searchParams.rating) : undefined,
+    category: params.category,
+    city: params.city,
+    minPrice: params.minPrice ? parseFloat(params.minPrice) : undefined,
+    maxPrice: params.maxPrice ? parseFloat(params.maxPrice) : undefined,
+    rating: params.rating ? parseFloat(params.rating) : undefined,
   });
 
   const cities = [...new Set(services.map((service) => service.city))];
