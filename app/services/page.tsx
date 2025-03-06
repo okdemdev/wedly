@@ -41,16 +41,18 @@ export default async function ServicesPage({
     rating?: string;
   };
 }) {
+  // Wait for searchParams to be ready
+  const params = await Promise.resolve(searchParams);
   const services = await getPublicServices({
-    category: searchParams.category,
-    city: searchParams.city,
-    minPrice: searchParams.minPrice ? parseFloat(searchParams.minPrice) : undefined,
-    maxPrice: searchParams.maxPrice ? parseFloat(searchParams.maxPrice) : undefined,
-    rating: searchParams.rating ? parseFloat(searchParams.rating) : undefined,
+    category: typeof params.category === 'string' ? params.category : undefined,
+    city: typeof params.city === 'string' ? params.city : undefined,
+    minPrice: params.minPrice ? parseFloat(params.minPrice) : undefined,
+    maxPrice: params.maxPrice ? parseFloat(params.maxPrice) : undefined,
+    rating: params.rating ? parseFloat(params.rating) : undefined,
   });
-
   const cities = [...new Set(services.map((service) => service.city))];
-
+  const hasCategory = typeof params.category === 'string';
+  // Rest of the component remains the same, just use params instead of searchParams
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-50 bg-background shadow-md">
@@ -73,7 +75,7 @@ export default async function ServicesPage({
       {/* Rest of the component remains the same */}
       <div className="container">
         <main className="py-6 px-4">
-          {!searchParams.category ? (
+          {!hasCategory ? (
             <div className="flex min-h-[400px] flex-col items-center justify-center gap-2 rounded-lg border bg-muted/40 p-8 text-center">
               <h2 className="text-xl font-semibold">Selectează o categorie</h2>
               <p className="text-muted-foreground">
@@ -88,7 +90,7 @@ export default async function ServicesPage({
             </div>
           )}
 
-          {searchParams.category && services.length === 0 && (
+          {hasCategory && services.length === 0 && (
             <div className="flex min-h-[400px] flex-col items-center justify-center gap-2 rounded-lg border bg-muted/40 p-8 text-center">
               <h2 className="text-xl font-semibold">Nu am găsit servicii</h2>
               <p className="text-muted-foreground">
