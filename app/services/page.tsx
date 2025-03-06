@@ -55,10 +55,13 @@ export default async function ServicesPage({
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-50 bg-background shadow-md">
         <div className="container mx-auto">
-          <div className="flex flex-col space-y-6 px-4 py-4 md:px-4">
+          <div className="flex flex-col space-y-2 px-4 py-2 md:px-4">
             <div className="flex md:flex-row items-center justify-between">
               <ScrollingLogo className="mr-4" />
-              <ServiceFilters cities={cities} className="flex-1 max-w-[500px] transition-all duration-300" />
+              <ServiceFilters
+                cities={cities}
+                className="flex-1 max-w-[500px] transition-all duration-300"
+              />
             </div>
           </div>
         </div>
