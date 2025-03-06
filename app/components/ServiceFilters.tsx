@@ -81,7 +81,7 @@ export function ServiceFilters({ cities, className }: { cities: string[]; classN
             <div className="flex items-center gap-2">
               <Search className="h-[12px] w-[12px]" />
               <span className="text-sm">
-                {Object.values(filters).some(Boolean) ? 'Edit your search' : 'Start your search'}
+                {Object.values(filters).some(Boolean) ? 'Modifică filtrele' : 'Caută servicii'}
               </span>
             </div>
           </Button>
