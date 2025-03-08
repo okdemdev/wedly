@@ -8,8 +8,11 @@ export default function Home() {
   return (
     <>
       <nav className="border-b">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <ScrollingLogo />
+          <button className="px-4 py-2 text-sm bg-pink-500 text-white rounded-md font-medium hover:bg-pink-600 transition-colors">
+            Adaugă serviciul tău
+          </button>
         </div>
       </nav>
 
@@ -78,7 +81,7 @@ export default function Home() {
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-6">
           {categories.map((category) => (
             <Link
