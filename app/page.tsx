@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { categories } from '@/lib/categories';
 import { ScrollingLogo } from './components/ScrollingLogo';
+import { Gift, Camera, Music, BellRing } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -12,14 +13,35 @@ export default function Home() {
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 py-12">
-        <div className="text-center mb-16 space-y-3">
-          <h1 className="text-4xl font-bold">Caută servicii pentru o nuntă de vis</h1>
-          <p className="text-lg text-muted-foreground">
-            Găsește profesioniști pentru orice buget, background și stil
-          </p>
+      <div className="relative bg-gradient-to-b from-muted/30 to-background overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute -left-4 top-10 opacity-10 animate-float-slow">
+            <BellRing className="w-24 h-24 text-primary" />
+          </div>
+          <div className="absolute right-10 top-0 opacity-10 animate-float-slower">
+            <Gift className="w-16 h-16 text-primary" />
+          </div>
+          <div className="absolute left-1/4 bottom-0 opacity-10 animate-float">
+            <Camera className="w-20 h-20 text-primary" />
+          </div>
+          <div className="absolute right-1/4 bottom-5 opacity-10 animate-float-slow">
+            <Music className="w-16 h-16 text-primary" />
+          </div>
         </div>
 
+        <div className="container mx-auto px-4 py-24 relative">
+          <div className="max-w-3xl space-y-6">
+            <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+              Caută servicii pentru o nuntă de vis
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed">
+              Găsește profesioniști pentru orice buget, background și stil
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <main className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-6">
           {categories.map((category) => (
             <Link
