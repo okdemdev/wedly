@@ -89,8 +89,8 @@ export default {
         },
         draw: {
           '0%': { strokeDashoffset: '1', strokeDasharray: '1' },
-          '100%': { strokeDashoffset: '0', strokeDasharray: '1' }
-        }
+          '100%': { strokeDashoffset: '0', strokeDasharray: '1' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -98,7 +98,8 @@ export default {
         float: 'float 3s ease-in-out infinite',
         'float-slow': 'float 4s ease-in-out infinite',
         'float-slower': 'float 5s ease-in-out infinite',
-        'draw': 'draw 1s ease-in-out forwards'
+        draw: 'draw 1s ease-in-out forwards',
+        'draw-delayed': 'draw 1s ease-in-out 0.3s forwards',
       },
     },
   },

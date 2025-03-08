@@ -47,17 +47,25 @@ export default function Home() {
                 <svg
                   className="absolute -bottom-2 left-0 w-full"
                   width="100%"
-                  height="12"
-                  viewBox="0 0 400 12"
+                  height="16"
+                  viewBox="0 0 400 16"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     d="M3 9C100 3 200 3 397 9"
-                    stroke="hsl(var(--primary))"
+                    stroke="rgb(236 72 153)"
                     strokeWidth="2"
                     strokeLinecap="round"
                     className="animate-draw"
+                    pathLength="1"
+                  />
+                  <path
+                    d="M13 13C120 7 220 7 387 13"
+                    stroke="rgb(236 72 153)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="animate-draw-delayed"
                     pathLength="1"
                   />
                 </svg>
