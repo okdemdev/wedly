@@ -91,7 +91,21 @@ export default function Home() {
             >
               <div className="relative w-full aspect-video">
                 <Image
-                  src="https://cdn.pixabay.com/photo/2016/06/29/04/17/wedding-dress-1485984_1280.jpg"
+                  src={
+                    category.value === 'photography'
+                      ? 'https://cdn.pixabay.com/photo/2023/01/18/13/09/camera-7726802_1280.jpg'
+                      : category.value === 'catering'
+                      ? 'https://cdn.pixabay.com/photo/2016/01/11/07/18/cupcakes-1133146_640.jpg'
+                      : category.value === 'music'
+                      ? 'https://cdn.pixabay.com/photo/2018/09/26/01/06/piano-3703616_640.jpg'
+                      : category.value === 'fireworks'
+                      ? 'https://cdn.pixabay.com/photo/2013/01/12/17/35/fireworks-74689_640.jpg'
+                      : category.value === 'jewelry'
+                      ? 'https://cdn.pixabay.com/photo/2020/05/13/01/57/engagement-ring-5165498_640.jpg'
+                      : category.value === 'gifts'
+                      ? 'https://cdn.pixabay.com/photo/2017/02/23/16/27/confetti-2092583_640.jpg'
+                      : 'https://cdn.pixabay.com/photo/2016/06/29/04/17/wedding-dress-1485984_1280.jpg'
+                  }
                   alt={category.label}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
