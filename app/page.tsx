@@ -40,8 +40,28 @@ export default function Home() {
 
         <div className="container mx-auto px-4 py-24 relative">
           <div className="max-w-3xl space-y-6">
-            <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              Caută servicii pentru o nuntă de vis
+            <h1 className="text-5xl font-bold tracking-tight relative">
+              Caută servicii pentru o{' '}
+              <span className="relative inline-block">
+                nuntă de vis
+                <svg
+                  className="absolute -bottom-2 left-0 w-full"
+                  width="100%"
+                  height="12"
+                  viewBox="0 0 400 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 9C100 3 200 3 397 9"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="animate-draw"
+                    pathLength="1"
+                  />
+                </svg>
+              </span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
               Găsește profesioniști pentru orice buget, background și stil
