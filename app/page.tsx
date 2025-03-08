@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { categories } from '@/lib/categories';
 import { ScrollingLogo } from './components/ScrollingLogo';
-import { Gift, Camera, Music, BellRing } from 'lucide-react';
+import { Gift, Camera, Music, BellRing, Cake, SparklesIcon, Scissors } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -15,17 +15,26 @@ export default function Home() {
 
       <div className="relative bg-gradient-to-b from-muted/30 to-background overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute -left-4 top-10 opacity-10 animate-float-slow">
-            <BellRing className="w-24 h-24 text-primary" />
+          <div className="absolute left-10 top-10 opacity-10 animate-float">
+            <Scissors className="w-16 h-16 text-primary" />
           </div>
-          <div className="absolute right-10 top-0 opacity-10 animate-float-slower">
-            <Gift className="w-16 h-16 text-primary" />
-          </div>
-          <div className="absolute left-1/4 bottom-0 opacity-10 animate-float">
+          <div className="absolute right-1/4 top-5 opacity-10 animate-float-slower">
             <Camera className="w-20 h-20 text-primary" />
           </div>
-          <div className="absolute right-1/4 bottom-5 opacity-10 animate-float-slow">
-            <Music className="w-16 h-16 text-primary" />
+          <div className="absolute left-1/3 top-16 opacity-10 animate-float-slow">
+            <Cake className="w-16 h-16 text-primary" />
+          </div>
+          <div className="absolute right-1/3 bottom-20 opacity-10 animate-float">
+            <Music className="w-14 h-14 text-primary" />
+          </div>
+          <div className="absolute left-1/4 bottom-10 opacity-10 animate-float-slower">
+            <SparklesIcon className="w-16 h-16 text-primary" />
+          </div>
+          <div className="absolute right-20 bottom-16 opacity-10 animate-float-slow">
+            <BellRing className="w-14 h-14 text-primary" />
+          </div>
+          <div className="absolute right-2/3 bottom-5 opacity-10 animate-float">
+            <Gift className="w-12 h-12 text-primary" />
           </div>
         </div>
 
