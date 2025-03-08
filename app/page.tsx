@@ -16,25 +16,25 @@ export default function Home() {
       <div className="relative bg-gradient-to-b from-muted/30 to-background overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute left-[5%] top-[10%] opacity-10 animate-float">
-            <Scissors className="w-16 h-16 text-primary" />
+            <Scissors className="w-16 h-16 text-pink-500" />
           </div>
           <div className="absolute right-[15%] top-[15%] opacity-10 animate-float-slower">
-            <Camera className="w-16 h-16 text-primary" />
+            <Camera className="w-16 h-16 text-pink-500" />
           </div>
           <div className="absolute left-[40%] top-[8%] opacity-10 animate-float-slow">
-            <Cake className="w-14 h-14 text-primary" />
+            <Cake className="w-14 h-14 text-pink-500" />
           </div>
           <div className="absolute right-[40%] bottom-[30%] opacity-10 animate-float">
-            <Music className="w-14 h-14 text-primary" />
+            <Music className="w-14 h-14 text-pink-500" />
           </div>
           <div className="absolute left-[20%] bottom-[20%] opacity-10 animate-float-slower">
-            <SparklesIcon className="w-16 h-16 text-primary" />
+            <SparklesIcon className="w-16 h-16 text-pink-500" />
           </div>
           <div className="absolute right-[10%] bottom-[15%] opacity-10 animate-float-slow">
-            <BellRing className="w-14 h-14 text-primary" />
+            <BellRing className="w-14 h-14 text-pink-500" />
           </div>
           <div className="absolute left-[60%] bottom-[10%] opacity-10 animate-float">
-            <Gift className="w-12 h-12 text-primary" />
+            <Gift className="w-12 h-12 text-pink-500" />
           </div>
         </div>
 
